@@ -1,11 +1,9 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import observerPlugin from "mobx-react-observer/vite-plugin";
 
 export default defineConfig(({ command }) => ({
   plugins: [
     react(),
-    observerPlugin(),
   ],
 
   // 1. Подмена для твоего исходного кода и финальной prod-сборки

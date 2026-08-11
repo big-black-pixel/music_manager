@@ -12,7 +12,6 @@
   "dependencies": {
     "mobx": "^7.0.0",
     "mobx-react-lite": "^5.0.0",
-    "mobx-react-observer": "^2.0.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
