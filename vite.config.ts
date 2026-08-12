@@ -1,22 +1,17 @@
-import { defineConfig } from 'vite'
+import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
+import { fileURLToPath, URL } from 'node:url'
+import { defineConfig } from 'vite'
 
-export default defineConfig(({ command }) => ({
-  plugins: [
-    react(),
-  ],
-
-  // 1. Подмена для твоего исходного кода и финальной prod-сборки
-  define: {
-    __DEV__: JSON.stringify(command === 'serve'),
-  },
-
-  // 2. Подмена внутри предбампленных зависимостей (здесь живёт mobx)
-  optimizeDeps: {
-    esbuildOptions: {
-      define: {
-        __DEV__: command === 'serve' ? 'true' : 'false',
-      },
-    },
-  },
-}))
+// https://vite.dev/config/
+export default defineConfig({
+	plugins: [
+		react(),
+		tailwindcss(),
+	],
+	resolve: {
+		alias: {
+			'@': fileURLToPath(new URL('./src', import.meta.url)),
+		},
+	},
+})
