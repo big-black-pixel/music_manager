@@ -7,7 +7,7 @@ interface Props {
 export function Menu({ items, title }: Props) {
     return (
         <div>
-            {title && <div className="opacity-60 text-xs uppercase font-medium mb -6">{title}</div>}
+            {title && <div className="opacity-60 text-xxs uppercase font-medium mb -6">{title}</div>}
             <ul>
                 {items.map((item) => (
                     <li  key={item.name}>
@@ -15,7 +15,7 @@ export function Menu({ items, title }: Props) {
                             href="#">
                             {item.icon && <item.icon
                             className="group-hover:text-primary duration-300" />}
-                            <span className="group-hover:text-primary duration-300"
+                            <span className="group-hover:text-primary duration-300 font-medium"
                             >{item.name}</span>
                         </a>
                     </li>
