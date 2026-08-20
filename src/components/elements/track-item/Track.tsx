@@ -1,13 +1,12 @@
-import dayjs from 'dayjs'
-import utc from 'dayjs/plugin/utc'
+
 import type { ITrack } from "@/types/track.types"
 import { Ellipsis, Heart } from "lucide-react"
 import { TrackInfo } from '@/components/ui/track-info/TrackInfo'
+import {transformDuration} from '@/utils/transform-duration'
 
 interface Props {
     track: ITrack
 }
-dayjs.extend(utc)
 
 export function Track({ track }: Props) {
     return (
@@ -15,7 +14,7 @@ export function Track({ track }: Props) {
         flex justify-between items-center w-full last:border-0 ">
             <TrackInfo 
             title={track.name}
-            subTitle={dayjs.unix(track.duration).utc().format('mm:ss')}
+            subTitle={transformDuration(track.duration)}
             image={undefined}
             />
 

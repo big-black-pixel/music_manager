@@ -3,9 +3,9 @@ import utc from 'dayjs/plugin/utc'
 
 dayjs.extend(utc)
 
-export const transformDuration = (duration: number) => {
+export const transformDuration = (duration: number) => 
  dayjs.unix(duration).utc().format('mm:ss')
-}
+
 
 
 // export const transformDuration = (duration?: number) => {
