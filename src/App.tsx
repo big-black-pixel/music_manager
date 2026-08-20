@@ -30,7 +30,8 @@ const App = observer(() => {
             </div>
 
             <button className="rounded-full bg-gradient-to-r from-[#2F3034] to-[#1F2026] 
-            p-5 border border-player-bg border-solid duration-300 hover:translate-y-[-2px] hover:shadow">
+            p-5 border border-player-bg border-solid duration-300 
+            hover:translate-y-[-2px] hover:shadow">
               <Play
                 className="text-primary"
                 fill="var(--color-primary)"
