@@ -7,7 +7,7 @@ export default function Layaout({ children }: React.PropsWithChildren<unknown>) 
 
     return (
         <>
-        <div className='min-h-screen h-full grid grid-cols-[1fr_4fr_1.5fr]'>
+        <div className='min-h-screen h-full grid grid-cols-[1fr_4fr_1.4fr] pb-10'>
 
             <LeftSidebar />
 

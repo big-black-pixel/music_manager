@@ -5,7 +5,9 @@ import { makeAutoObservable } from "mobx";
 class MusicPlayerStore {
     isPlaying:boolean = false;
     currentTrack:ITrack | null = TRACKS[0];
-    volume: number = 85
+    volume: number = 85;
+    currentTime: number = 0;
+    progress: number = 0;
 
     constructor(){
         makeAutoObservable(this)
@@ -16,6 +18,12 @@ class MusicPlayerStore {
         this.isPlaying = true ;
         console.log(`Playing track: ${track.name}`)
     }
+
+    seek(time: number ){
+        this.currentTime = time
+        this.progress = (time / (this.currentTrack?.duration || 1)) * 100
+    }
+
 }
 
 export const musicPlayerStore = new MusicPlayerStore()

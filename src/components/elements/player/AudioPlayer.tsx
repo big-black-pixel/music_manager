@@ -15,48 +15,74 @@ export function AudioPlayer({ }: Props) {
 
 
     return (
-        <div className="w-full py-8 px-10 bg-player-bg border-t 
-        border-white/10 flex items-center justify-between fixed 
-        bottom-0 left-0 ">
+        <div className="w-full py-5 px-10 bg-player-bg border-t border-white/10 
+        grid grid-cols-[1fr_5.8fr] fixed bottom-0 left-0 ">
             <TrackInfo
                 title={musicPlayerStore.currentTrack.name}
                 subTitle={musicPlayerStore.currentTrack.artist.name}
                 image={undefined}
             />
 
-            <div className="flex items-center gap-8">
+            <div className="grid grid-cols-[1fr_8fr_1fr] items-center gap-8">
                 <div className="flex items-center gap-2.5">
                     <button className="opacity-70 hover:opacity-100 duration-300">
-                        <SkipBack />
+                        <SkipBack size={25} />
                     </button>
 
                     <button
                         className="rounded-full bg-gradient-to-r from-[#3C3D41] to-[#1F2026] 
-                        p-3.5 border border-white/10 border-solid duration-300 hover:shadow  
-                        text-primary group ">
+                        p-3.5 border border-white/10 border-solid  hover:shadow   
+                        text-primary  ">
 
                         {musicPlayerStore.isPlaying ? (
                             <Pause size={20} />
                         ) : (
-                            <Play 
-                            size={20}
-                            className="group-hover:fill-primary duration-300"
-                             />)}
+                            <Play
+                                size={20}
+                            />)}
                     </button>
 
                     <button className="opacity-70 hover:opacity-100 duration-300">
-                        <SkipForward />
+                        <SkipForward size={25} />
                     </button>
                 </div>
 
-                <div>
-                    <span>0:00</span>
-                    <input type="range" min="0" max="100" value="50" />
-                    <span>{
-                        transformDuration(musicPlayerStore.currentTrack.duration)}</span>
+                <div className="flex items-center gap-2">
+                    <span className="w-20">
+                        {transformDuration(musicPlayerStore.currentTime)}
+                    </span>
+
+                    <div className="bg-white/20 w-full rounded relative h-1 ">
+
+                        <div className="absolute top-0 left-0 h-full rounded bg-gradient-to-r
+                        from-primary to-secondary  "
+                            style={{
+                                width: `${musicPlayerStore.progress}%`
+                            }}
+                            
+                        />
+                        {/* thumb */}
+                        <div className="w-3.5 h-3.5 bg-secondary rounded-full absolute top-1/2
+                        -translate-y-1/2 -translate-x-1/2"
+                        style={{
+                            left: `${musicPlayerStore.progress}%`
+                        }}/>
+                        <input
+                            type="range"
+                            min={0}
+                            max={musicPlayerStore.currentTrack.duration}
+                            className=""
+                            onChange={e => musicPlayerStore.seek(+e.target.value)}
+                            value={musicPlayerStore.currentTime}
+                        />
+                    </div>
+
+                    <span className="text-white/70">{
+                        transformDuration(musicPlayerStore.currentTrack.duration)}
+                    </span>
                 </div>
 
-                <div>
+                <div className="">
                     {
                         musicPlayerStore.volume === 0 ? <Volume /> :
                             musicPlayerStore.volume < 50 ? <Volume1 /> :
