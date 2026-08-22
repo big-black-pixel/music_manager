@@ -1,8 +1,7 @@
+import { ProgressBar } from "@/components/ui/progress-bar/ProgressBar";
 import { TrackInfo } from "@/components/ui/track-info/TrackInfo";
 import { musicPlayerStore } from "@/store/store";
-import { transformDuration } from '@/utils/transform-duration'
 import { Pause, Play, SkipBack, SkipForward, Volume, Volume1, Volume2 } from "lucide-react";
-
 interface Props {
 
 }
@@ -23,16 +22,15 @@ export function AudioPlayer({ }: Props) {
                 image={undefined}
             />
 
-            <div className="grid grid-cols-[1fr_8fr_1fr] items-center gap-8">
-                <div className="flex items-center gap-2.5">
-                    <button className="opacity-70 hover:opacity-100 duration-300">
+			<div className="grid grid-cols-[1fr_6.9fr_2fr] gap-8 items-center">
+				<div className="flex items-center gap-2.5">
+                    <button className="opacity-80 hover:opacity-100 duration-300">
                         <SkipBack size={25} />
                     </button>
 
                     <button
-                        className="rounded-full bg-gradient-to-r from-[#3C3D41] to-[#1F2026] 
-                        p-3.5 border border-white/10 border-solid  hover:shadow   
-                        text-primary  ">
+						className="rounded-full bg-gradient-to-r from-[#3C3D41] to-[#444549] p-3.5 border 
+						border-white/5 border-solid hover:shadow text-primary">
 
                         {musicPlayerStore.isPlaying ? (
                             <Pause size={20} />
@@ -42,54 +40,33 @@ export function AudioPlayer({ }: Props) {
                             />)}
                     </button>
 
-                    <button className="opacity-70 hover:opacity-100 duration-300">
+                    <button className="opacity-80 hover:opacity-100 duration-300">
                         <SkipForward size={25} />
                     </button>
                 </div>
 
-                <div className="flex items-center gap-2">
-                    <span className="w-20">
-                        {transformDuration(musicPlayerStore.currentTime)}
-                    </span>
 
-                    <div className="bg-white/20 w-full rounded relative h-1 ">
-
-                        <div className="absolute top-0 left-0 h-full rounded bg-gradient-to-r
-                        from-primary to-secondary  "
-                            style={{
-                                width: `${musicPlayerStore.progress}%`
-                            }}
-                            
-                        />
-                        {/* thumb */}
-                        <div className="w-3.5 h-3.5 bg-secondary rounded-full absolute top-1/2
-                        -translate-y-1/2 -translate-x-1/2"
-                        style={{
-                            left: `${musicPlayerStore.progress}%`
-                        }}/>
-                        <input
-                            type="range"
-                            min={0}
-                            max={musicPlayerStore.currentTrack.duration}
-                            className=""
-                            onChange={e => musicPlayerStore.seek(+e.target.value)}
-                            value={musicPlayerStore.currentTime}
-                        />
-                    </div>
-
-                    <span className="text-white/70">{
-                        transformDuration(musicPlayerStore.currentTrack.duration)}
-                    </span>
-                </div>
-
-                <div className="">
+                <ProgressBar
+                    currentValue={musicPlayerStore.currentTime}
+                    value={musicPlayerStore.currentTrack.duration}
+                    progress={musicPlayerStore.progress}
+                    onSeek={(time: number) => musicPlayerStore.seek(time)}
+                    isTextDisplayed
+                />
+				<div className="pl-6 max-w-36 grid grid-cols-[1fr_8fr] gap-1 items-center">
                     {
                         musicPlayerStore.volume === 0 ? <Volume /> :
                             musicPlayerStore.volume < 50 ? <Volume1 /> :
                                 <Volume2 />
                     }
 
-                    {/* ProgressBar */}
+                    <ProgressBar
+                        currentValue={musicPlayerStore.volume}
+                        value={100}
+                        progress={musicPlayerStore.volume}
+                        onSeek={(value: number) => musicPlayerStore.setVolume(value)}
+                        isThumbDisplayed={false}
+                    />
                 </div>
 
             </div>

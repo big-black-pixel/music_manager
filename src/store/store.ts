@@ -3,10 +3,11 @@ import type { ITrack } from "@/types/track.types";
 import { makeAutoObservable } from "mobx";
 
 class MusicPlayerStore {
+
     isPlaying:boolean = false;
     currentTrack:ITrack | null = TRACKS[0];
     volume: number = 85;
-    currentTime: number = 0;
+    currentTime: number = 177;
     progress: number = 0;
 
     constructor(){
@@ -23,6 +24,9 @@ class MusicPlayerStore {
         this.currentTime = time
         this.progress = (time / (this.currentTrack?.duration || 1)) * 100
     }
+   setVolume(volume: number) {
+		this.volume = volume
+	}
 
 }
 
