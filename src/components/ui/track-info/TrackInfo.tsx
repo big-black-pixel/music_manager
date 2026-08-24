@@ -1,29 +1,101 @@
-import { observer } from "mobx-react-lite/src/observer.js"
+import { playerStore } from '@/store/store'
+import type { ITrack } from '@/types/track.types'
+import { Pause, Play } from 'lucide-react'
+
+import cn from 'clsx'
+
+import { CircularProgressbar } from 'react-circular-progressbar'
+import 'react-circular-progressbar/dist/styles.css'
+import { observer } from 'mobx-react-lite/src/observer.js'
 
 interface Props {
-    image: string
-    title: string
-    subTitle: string
+	image: string
+	title: string
+	subTitle: string
+	track?: ITrack
 }
 
-export const TrackInfo = observer(({title, subTitle, image,}: Props) => {
-    return (
-        <div className="flex items-center gap-3">
-            {/* Circle progress-bar */}
-            {/* Play/pause button when hover title or cover */}
-            <div className="w-12 h-12 bg-white/5 border border-primary border-2 rounded-full p-0.5 " >
+export const TrackInfo = observer(({ title, subTitle, image, track }: Props) => {
+	const isActive = playerStore.currentTrack?.name === track?.name
 
-            <img
-                src={image}
-                alt={title}
-                className="w-full h-full rounded-full"
-            />
-            </div>
+	return (
+		<div className="flex items-center gap-3 text-left">
+			{track ? (
+				<button
+					onClick={() => {
+						if (!isActive) {
+							playerStore.setTrack(track)
+						}
 
-            <div>
-                <div className="text-white text-lg font-medium">{title}</div>
-                <div className="opacity-65 text-left">{subTitle}</div>
-            </div>
-        </div>
-    )
+						playerStore.togglePlayPause()
+					}}
+					className="block relative group"
+				>
+					{isActive && (
+						<CircularProgressbar
+							value={playerStore.progress}
+							className="absolute"
+							strokeWidth={5}
+							styles={{
+								trail: { stroke: '#2E3235' },
+								path: {
+									stroke: 'var(--color-primary)',
+									transition: 'stroke-dashoffset 0.5s ease 0s'
+								}
+							}}
+							counterClockwise
+						/>
+					)}
+
+					<div
+						className={cn(
+							'absolute inset-0 flex items-center justify-center group-hover:opacity-100',
+							isActive ? 'opacity-100' : 'opacity-0 duration-300'
+						)}
+					>
+						{!isActive ? (
+							<Play />
+						) : playerStore.isPlaying ? (
+							<Pause />
+						) : (
+							<Play />
+						)}
+					</div>
+
+					<img
+						src={image}
+						alt={title}
+						className="w-12 h-12 rounded-full m-1.5"
+					/>
+				</button>
+			) : (
+				<img
+					src={image}
+					alt={title}
+					className="w-12 h-12 rounded-full"
+				/>
+			)}
+
+			<div>
+				<div className="text-white text-lg font-medium">
+					{track ? (
+						<button
+							onClick={() => {
+								if (!isActive) {
+									playerStore.setTrack(track)
+									playerStore.play()
+								}
+							}}
+							className="hover:underline"
+						>
+							{title}
+						</button>
+					) : (
+						title
+					)}
+				</div>
+				<div>{subTitle}</div>
+			</div>
+		</div>
+	)
 })

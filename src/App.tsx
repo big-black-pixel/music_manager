@@ -5,14 +5,28 @@ import { SearchField } from './components/elements/search-field/SearchField'
 import { Play } from 'lucide-react'
 import { TRACKS } from './data/tracks.data'
 import { Track } from './components/elements/track-item/Track'
+import { useQueryState } from 'nuqs'
+import { useMemo } from 'react'
+
 
 const App = observer(() => {
 
+  const [searchTerm, setSearchTerm] = useQueryState('q')
+
+  const filteredTracks = useMemo(() => {
+    if (!searchTerm) return TRACKS 
+    return TRACKS.filter(track => 
+      track.name.toLocaleLowerCase().includes(searchTerm.toLowerCase())
+    )
+  },[searchTerm])
 
   return (
     <>
       <div>
-        <SearchField />
+        <SearchField
+          value={searchTerm || ''}
+          onChange={e => setSearchTerm(e.target.value)}
+        />
 
         <div className="relative">
           <img
@@ -41,11 +55,11 @@ const App = observer(() => {
         </div>
 
         <div>
-          {TRACKS.map(track => (
+          {filteredTracks.map(track => (
             <Track
-              key = {track.name}
+              key={track.name}
               track={track}
-            /> 
+            />
           ))}
         </div>
 

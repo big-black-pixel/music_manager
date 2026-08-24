@@ -7,11 +7,11 @@ export default function Layaout({ children }: React.PropsWithChildren<unknown>) 
 
     return (
         <>
-            <div className='min-h-screen h-full grid grid-cols-[1fr_4fr_1.4fr] pb-10'>
+            <div className='min-h-screen h-full grid grid-cols-[1fr_3.5fr_1.3fr] pb-10'>
 
                 <LeftSidebar />
 
-                <main className='px-12 py-layout '> {children} </main>
+                <main className='px-8 py-layout '> {children} </main>
 
                 <RightSidebar />
 
