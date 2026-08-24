@@ -11,15 +11,15 @@ interface Props {
 export function Track({ track }: Props) {
     return (
         <div className="border-b border-player-bg/90 py-6 
-        flex justify-between items-center w-full last:border-0 ">
+        flex justify-between items-center last:border-0 ">
             <TrackInfo 
             title={track.name}
             subTitle={transformDuration(track.duration)}
-            image={undefined}
+            image={track.cover}
             />
 
             <div className='flex items-center gap-4 '>
-                <button className="flex gap-2">
+                <button>
                     <Heart className="text-primary opacity-50 duration-300 hover:opacity-100" />
                 </button>
                 <button >
