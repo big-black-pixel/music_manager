@@ -12,7 +12,6 @@ export const useAudioPlayer = () => {
 		} else {
 			audioRef.current.pause()
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [playerStore.isPlaying])
 
 	const togglePlayPause = () => {

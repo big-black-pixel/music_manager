@@ -28,7 +28,7 @@ export const TRACKS: ITrack[] = [
 		file: '/audio/Insomnia.mp3',
 		cover: '/cover/Insomnia.jpg',
 		artist: ARTISTS[3],
-		duration: 136
+		duration: 180
 	},
 	{
 		name: 'Konje',

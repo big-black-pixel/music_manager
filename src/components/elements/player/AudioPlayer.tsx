@@ -1,6 +1,6 @@
 import { ProgressBar } from '@/components/ui/progress-bar/ProgressBar'
 import { TrackInfo } from '@/components/ui/track-info/TrackInfo'
-import { playerStore } from '@/store/store' 
+import { playerStore } from '@/store/store'
 import {
 	Pause,
 	Play,
@@ -62,7 +62,7 @@ export const AudioPlayer = observer(() => {
 						className="opacity-80 hover:opacity-100 duration-300"
 						onClick={() => changeTrack('next')}
 					>
-						<SkipForward size={20}  />
+						<SkipForward size={20} />
 					</button>
 				</div>
 

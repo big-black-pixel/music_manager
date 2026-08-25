@@ -1,37 +1,44 @@
-// NODO: Add dynamic lyrics
+import { LYRICS } from '@/data/lyrics.data'
+import { playerStore } from '@/store/store'
+import { Play } from 'lucide-react'
+import { Fragment } from 'react/jsx-runtime'
+import styles from './Lyrics.module.scss'
+import { observer } from 'mobx-react-lite/src/observer.js'
 
-import { Play } from "lucide-react"
-import styles from "./Lyrics.module.scss"
+export const Lyrics = observer(() => {
+	const lyric = LYRICS.find(
+		lyric => lyric.trackName === playerStore.currentTrack?.name
+	)
 
-export function Lyrics() {
-    return (
-        <div className={styles.lyrics}>
-            <div>[ Verse 1 ]</div>
+	return (
+		<div className={styles.lyrics}>
+			{lyric?.lines.map((line, index) => (
+				<Fragment key={index}>
+					{line.section && <br />}
+					{line.section && <div>[ {line.section} ]</div>}
 
-            <p>It might not be the right time</p>
-            <p>It might not be the right one</p>
-            <p>But there's something about us I want to say</p>
-            <p className={styles.active}>
-                <Play
-                    fill="var(--color-primary)"
-                    className={styles.Icon}
-                    size={10}
-                /> 
-                Cause there's something between us anyway</p>
+					<button
+						className={
+							playerStore.currentTime === line.time ? styles.active : undefined
+						}
+						onClick={() => {
+							playerStore.seek(line.time)
+						}}
+					>
+						<p>
+							{playerStore.currentTime === line.time && (
+								<Play
+									fill="var(--color-primary)"
+									className={styles.icon}
+									size={10}
+								/>
+							)}
 
-            <div>[ Verse 2 ]</div>
-
-            <p>It might not be the right one</p>
-            <p>It might not be the right time</p>
-            <p>But there's something about us</p>
-            <p>I've got to do</p>
-            <p>Some kind of secret I will share with you</p>
-
-            <div>[ Refrain ]</div>
-
-            <p>I need you more than anything in my life</p>
-            <p>I want you more than anything in my life</p>
-            <p>I'll miss you more than anyone in my life</p>
-        </div>
-    )
-}
+							{line.text}
+						</p>
+					</button>
+				</Fragment>
+			))}
+		</div>
+	)
+})

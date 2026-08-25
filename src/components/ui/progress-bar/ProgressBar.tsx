@@ -1,4 +1,5 @@
 import { transformDuration } from '@/utils/transform-duration'
+import { observer } from 'mobx-react-lite/src/observer.js'
 
 interface Props {
 	currentValue: number
@@ -9,14 +10,14 @@ interface Props {
 	isThumbDisplayed?: boolean
 }
 
-export function ProgressBar({
+export const ProgressBar = observer(({
 	currentValue,
 	value,
 	progress,
 	onSeek,
 	isTextDisplayed,
 	isThumbDisplayed = true
-}: Props) {
+}: Props) => {
 	return (
 		<div className="flex items-center gap-5">
 			{isTextDisplayed && (
@@ -33,8 +34,7 @@ export function ProgressBar({
 
 				{isThumbDisplayed && (
 					<div
-						className="w-3.5 h-3.5 bg-secondary rounded-full absolute top-1/2 
-						-translate-y-1/2 -translate-x-1/2"
+						className="w-3.5 h-3.5 bg-secondary rounded-full absolute top-1/2 -translate-y-1/2 -translate-x-1/2"
 						style={{
 							left: `${progress}%`
 						}}
@@ -45,6 +45,7 @@ export function ProgressBar({
 					type="range"
 					min={0}
 					max={value}
+					className=""
 					onChange={e => onSeek(+e.target.value)}
 					value={currentValue}
 				/>
@@ -55,4 +56,4 @@ export function ProgressBar({
 			)}
 		</div>
 	)
-}
+})

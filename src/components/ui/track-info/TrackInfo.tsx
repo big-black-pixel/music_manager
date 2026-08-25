@@ -19,7 +19,7 @@ export const TrackInfo = observer(({ title, subTitle, image, track }: Props) => 
 	const isActive = playerStore.currentTrack?.name === track?.name
 
 	return (
-		<div className="flex items-center gap-3 text-left">
+		<div className="flex items-center gap-3">
 			{track ? (
 				<button
 					onClick={() => {
